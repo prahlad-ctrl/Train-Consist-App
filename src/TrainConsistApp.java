@@ -4,8 +4,20 @@ class TrainConsistApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> consist = new ArrayList<>();
+        List<String> passengerBogies = new ArrayList<>();
 
-        System.out.println("Initial Bogie Count: " + consist.size());
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("AC Chair");
+        passengerBogies.add("First Class");
+
+        System.out.println("Passenger Bogies: " + passengerBogies);
+
+        passengerBogies.remove("AC Chair");
+
+        System.out.println("After Removal: " + passengerBogies);
+
+        System.out.println("Contains Sleeper: " + passengerBogies.contains("Sleeper"));
+
+        System.out.println("Final Bogies: " + passengerBogies);
     }
 }
