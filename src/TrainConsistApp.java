@@ -1,21 +1,31 @@
 import java.util.*;
 
-class InvalidCapacityException extends Exception {
-    InvalidCapacityException(String message) {
+class CargoSafetyException extends RuntimeException {
+    CargoSafetyException(String message) {
         super(message);
     }
 }
 
-class Bogie {
-    String name;
-    int capacity;
+class GoodsBogie {
+    String type;
+    String cargo;
 
-    Bogie(String name, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException("Capacity must be greater than zero");
+    GoodsBogie(String type) {
+        this.type = type;
+    }
+
+    void assignCargo(String cargo) {
+        try {
+            if (type.equals("Rectangular") && cargo.equals("Petroleum")) {
+                throw new CargoSafetyException("Unsafe cargo assignment");
+            }
+            this.cargo = cargo;
+            System.out.println("Cargo assigned: " + cargo);
+        } catch (CargoSafetyException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            System.out.println("Assignment attempt completed");
         }
-        this.name = name;
-        this.capacity = capacity;
     }
 }
 
@@ -23,14 +33,12 @@ class TrainConsistApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        try {
-            Bogie b1 = new Bogie("Sleeper", 72);
-            Bogie b2 = new Bogie("AC Chair", -10);
+        GoodsBogie b1 = new GoodsBogie("Cylindrical");
+        GoodsBogie b2 = new GoodsBogie("Rectangular");
 
-            System.out.println(b1.name + " -> " + b1.capacity);
-            System.out.println(b2.name + " -> " + b2.capacity);
-        } catch (InvalidCapacityException e) {
-            System.out.println(e.getMessage());
-        }
+        b1.assignCargo("Petroleum");
+        b2.assignCargo("Petroleum");
+
+        System.out.println("Program continues...");
     }
 }
